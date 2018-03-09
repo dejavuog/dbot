@@ -16,17 +16,8 @@ async def on_ready():
     print ("with the ID: " + bot.user.id)
 
 @bot.command(pass_context=True)
-async def ping(ctx):
-    await bot.say(":ping_pong: ping!! xSSS")
-
-@bot.command(pass_context=True)
 async def info(ctx, user: discord.Member):
-    await bot.say("the user name is: {}".format(user.name))
-    await bot.say("the users ID is: {}".format(user.id))
-
-@bot.command(pass_context=True)
-async def embed(ctx, user: discord.Member):
-    embed = discord.Embed(title="{}'s info".format(user.name), description="This Nigga.", color=0x00ff00)
+    embed = discord.Embed(title="{}'s info".format(user.name), description="This is all i know about this nigga.", color=0x00ff00)
     embed.add_field(name="Name", value=user.name, inline=True)
     embed.add_field(name="Highest Role", value=user.top_role)
     embed.add_field(name="Joined", value=user.joined_at)
@@ -34,8 +25,18 @@ async def embed(ctx, user: discord.Member):
     await bot.say(embed=embed)    
 
 @bot.command()
-async def repeat(times : int, content=None):
+@commands.has_role("Moderator")
+async def spam(times : int, content=None):
     for i in range(times):
         await bot.say(content)
+
+@bot.command(pass_context=True)
+@commands.has_role("Moderator")
+async def delet(ctx, number):
+    mgs = []
+    number = int(number)
+    async for x in bot.logs_from(ctx.message.channel, limit = number):
+        mgs.append(x)
+    await bot.delete_messages(mgs)
 
 bot.run("process.env.BOT_TOKEN")
