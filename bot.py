@@ -33,17 +33,6 @@ async def embed(ctx, user: discord.Member):
     embed.set_thumbnail(url=user.avatar_url)
     await bot.say(embed=embed)    
 
-@bot.command(pass_context=True)
-async def rimg(ctx):
-    imgList = os.listdir("C:/Users/Roberts/Desktop/ok")
-    imgString = random.choice(imgList)
-    path = "C:/Users/Roberts/Desktop/ok/" + imgString
-    print(type(path))
-    await bot.upload(path)
-
-import discord
-import asyncio
-
 @bot.command()
 async def repeat(times : int, content=None):
     for i in range(times):
